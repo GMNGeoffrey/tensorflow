@@ -73,8 +73,8 @@ def clean_dep(dep):
 # If TensorFlow is linked as a submodule.
 # path_prefix is no longer used.
 # tf_repo_name is thought to be under consideration.
-def tf_workspace(path_prefix = "", tf_repo_name = ""):
-    tf_repositories(path_prefix, tf_repo_name)
+def tf_workspace(path_prefix = "", tf_repo_name = "", register_toolchains = True):
+    tf_repositories(path_prefix, tf_repo_name, register_toolchains)
     tf_bind()
 
 # Toolchains & platforms required by Tensorflow to build.
@@ -83,12 +83,13 @@ def tf_toolchains():
     native.register_toolchains("@local_execution_config_python//:py_toolchain")
 
 # Define all external repositories required by TensorFlow
-def tf_repositories(path_prefix = "", tf_repo_name = ""):
+def tf_repositories(path_prefix = "", tf_repo_name = "", register_toolchains = True):
     """All external dependencies for TF builds."""
 
     # Initialize toolchains and platforms.
-    tf_toolchains()
-
+    if register_toolchains:
+        tf_toolchains()
+        
     # Loads all external repos to configure RBE builds.
     initialize_rbe_configs()
 
