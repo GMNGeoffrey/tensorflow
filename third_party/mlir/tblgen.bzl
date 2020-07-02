@@ -19,11 +19,13 @@ def gentbl(name, tblgen, td_file, tbl_outs, td_srcs = [], td_includes = [], td_r
     srcs = []
     srcs += td_srcs
     if td_file not in td_srcs:
-        srcs += [td_file]
+        srcs.append(td_file)
 
     td_includes_cmd = [
-        "-I external/llvm-project/mlir/include -I external/org_tensorflow",
+        "-I external/llvm-project/mlir/include",
         "-I $(GENDIR)/external/llvm-project/mlir/include",
+        "-I external/org_tensorflow",
+        "-I external/org_tensorflow/tensorflow/compiler/mlir/hlo/include",
     ]
     for td_include in td_includes:
         td_includes_cmd += [
